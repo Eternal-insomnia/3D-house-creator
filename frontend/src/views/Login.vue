@@ -29,7 +29,7 @@
           const response = await fetch('http://localhost:8080/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: this.email, password: this.password }),
+            body: JSON.stringify({ userEmail: this.email, userPassword: this.password }),
           });
           if (response.ok) {
             const user = await response.json();

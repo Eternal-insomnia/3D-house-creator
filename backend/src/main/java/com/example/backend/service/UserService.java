@@ -45,4 +45,25 @@ public class UserService {
         Optional<User> user = userRepository.findByUserEmail(userEmail);
         return user.orElseThrow(() -> new RuntimeException("User with email " + userEmail + " not found"));
     }
+
+    /**
+     * Аутентифицировать пользователя и вернуть его данные
+     *
+     * @param userEmail    - email пользователя
+     * @param userPassword - пароль пользователя
+     * @return объект пользователя
+     * @throws RuntimeException, если аутентификация не удалась
+     */
+    public User authenticateAndGetUser(String userEmail, String userPassword) {
+        Optional<User> userOptional = userRepository.findByUserEmail(userEmail);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (user.getUserPassword().equals(userPassword)) {
+                return user;
+            } else {
+                throw new RuntimeException("Invalid password");
+            }
+        }
+        throw new RuntimeException("User not found");
+    }
 }

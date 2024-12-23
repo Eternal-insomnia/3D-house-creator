@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Dashboard</h1>
-    <p>Welcome, {{ user ? user.email : 'Guest' }}</p>
+    <p>Welcome, {{ user ? user.userEmail : 'Guest' }}</p>
     <div v-if="projects.length">
       <h2>Your Projects</h2>
       <ul>

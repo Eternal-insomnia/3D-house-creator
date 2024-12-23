@@ -1,9 +1,11 @@
 package com.example.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.backend.entity.ErrorResponse;
 import com.example.backend.entity.LoginRequest;
 import com.example.backend.entity.User;
 import com.example.backend.repository.UserRepository;
@@ -50,19 +52,17 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
         try {
-            User user = userService.findUserByUserEmail(
-                loginRequest.getUserEmail()
+            User user = userService.authenticateAndGetUser(
+                loginRequest.getUserEmail(), 
+                loginRequest.getUserPassword()
             );
 
-            boolean isAuthenticated = loginRequest.getUserPassword().equals(user.getUserPassword());
-
-            if (isAuthenticated) {
-                return ResponseEntity.ok("Login successful");
-            } else {
-                return ResponseEntity.status(401).body("Invalid credentials");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("An error occurred: " + e.getMessage());
+            // Если пользователь найден, возвращаем его данные
+            return ResponseEntity.ok(user);
+        } catch (RuntimeException e) {
+            // Если ошибка, возвращаем сообщение
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(new ErrorResponse("Login failed: " + e.getMessage()));
         }
     }
 }
