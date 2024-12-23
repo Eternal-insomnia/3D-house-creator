@@ -1,11 +1,11 @@
 <template>
     <div>
-      <h1>Login</h1>
+      <h1>Вход</h1>
       <form @submit.prevent="login" method="post">
-        <input v-model="email" type="userEmail" placeholder="Email" />
+        <input v-model="email" type="userEmail" placeholder="Электронная почта" />
         <span v-if="emailError" class="error">Invalid email format</span>
-        <input v-model="password" type="userPassword" placeholder="Password" />
-        <button type="submit">Login</button>
+        <input v-model="password" type="userPassword" placeholder="Пароль" />
+        <button type="submit">Войти</button>
       </form>
     </div>
   </template>

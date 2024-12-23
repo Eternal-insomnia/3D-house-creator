@@ -1,15 +1,15 @@
 <template>
   <div>
-    <h1>Dashboard</h1>
-    <p>Welcome, {{ user ? user.userEmail : 'Guest' }}</p>
+    <h1>Личный кабинет</h1>
+    <p>Добро пожаловать, {{ user ? user.userName : 'Guest' }}</p>
     <div v-if="projects.length">
-      <h2>Your Projects</h2>
+      <h2>Ваши проекты</h2>
       <ul>
         <li v-for="project in projects" :key="project.id">{{ project.name }}</li>
       </ul>
     </div>
     <div v-else>
-      <p>No projects available. Create your first project!</p>
+      <p>У вас нет проектов. Возможно, пришло время создать новый!</p>
     </div>
   </div>
 </template>
