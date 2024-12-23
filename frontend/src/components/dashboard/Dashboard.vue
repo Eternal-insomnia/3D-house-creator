@@ -18,7 +18,7 @@
           </button>
         </div>
         <div class="dashboard-menu-button">
-          <button>
+          <button @click="redirectToPage">
             Выйти
           </button>
         </div>
@@ -63,6 +63,11 @@ export default {
   },
   created() {
     this.$store.dispatch('fetchProjects');
+  },
+  methods: {
+    redirectToPage() {
+      this.$router.push('/')
+    }
   },
 };
 </script>
