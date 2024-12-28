@@ -1,0 +1,47 @@
+name: consent-code
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: backend-app:1.0
+    container_name: backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/3D_house_creator_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:17
+    container_name: database
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: 3D_house_creator_db
+      POSTGRES_INITDB_ARGS: "-c datestyle='German, DMY'"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  vite-app:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: frontend-app:1.0
+    container_name: frontend
+    ports: 
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:
