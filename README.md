@@ -9,3 +9,6 @@
 ```docker
     docker-compose down --volumes
 ```
+
+Проект будет выстроен по этой архитектуре (Views для ускорения работы с БД)
+![архитектура_серверной_части](./pictures/Spring-MVC-Work-Flow.jpg)
