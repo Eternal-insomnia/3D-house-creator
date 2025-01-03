@@ -1,12 +1,14 @@
 <template>
-  <div>
+  <div class="login-component">
     <h1>Вход</h1>
     <form @submit.prevent="login" method="post">
       <input v-model="email" type="userEmail" placeholder="Электронная почта" />
       <span v-if="emailError" class="error">Invalid email format</span>
-      <input v-model="password" type="userPassword" placeholder="Пароль" />
+      <input v-model="password" type="password" placeholder="Пароль" />
       <button type="submit">Войти</button>
     </form>
+    <label>Нет аккаунта? </label>
+    <span @click="toRegistration" type="submit" class="login-to-registration__button">Зарегистрироваться</span>
   </div>
 </template>
 
@@ -44,7 +46,17 @@
           alert('An error occurred while connecting to the server.');
         }
       },
+      toRegistration() {
+        this.$router.push('/registration');
+      },
     },
   };
 </script>
   
+<style>
+.login-to-registration__button {
+	padding: 0 5px;
+	color: #00f;
+	text-decoration: underline;
+}
+</style>

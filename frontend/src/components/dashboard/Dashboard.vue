@@ -11,8 +11,6 @@
           <button @click="currentComponent = 'PersonalAccountComponent'">
             Личные данные
           </button>
-        </div>
-        <div class="dashboard-menu-button">
           <button @click="currentComponent = 'ProjectComponent'">
             Проекты
           </button>
@@ -66,7 +64,7 @@ export default {
   },
   methods: {
     redirectToPage() {
-      this.$router.push('/')
+      this.$router.push('/login')
     }
   },
 };
