@@ -2,7 +2,6 @@ package com.example.backend.service;
 
 import com.example.backend.entity.User;
 import com.example.backend.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,11 +12,10 @@ public class UserService {
     
     private final UserRepository userRepository;
     
-    @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -26,12 +24,27 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
     
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public void createUser(User user) {
+        userRepository.save(user);
     }
     
-    public void deleteUser(Integer id) {
-        userRepository.deleteById(id);
+    public boolean deleteUser(Integer id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return true;
+        }
+        
+        return false;
+    }
+
+    public boolean editUser(User user, int id) {
+        if (userRepository.existsById(id)) {
+            user.setUserId(id);
+            userRepository.save(user);
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -52,7 +65,7 @@ public class UserService {
      * @param userEmail    - email пользователя
      * @param userPassword - пароль пользователя
      * @return объект пользователя
-     * @throws RuntimeException, если аутентификация не удалась
+     * @throws RuntimeException если аутентификация не удалась
      */
     public User authenticateAndGetUser(String userEmail, String userPassword) {
         Optional<User> userOptional = userRepository.findByUserEmail(userEmail);

@@ -4,17 +4,18 @@ public class LoginRequest {
     private String userEmail;
     private String userPassword;
 
-    // Геттеры и сеттеры
+    // GETs
     public String getUserEmail() {
         return userEmail;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
     public String getUserPassword() {
         return userPassword;
+    }
+
+    // SETs
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public void setUserPassword(String userPassword) {

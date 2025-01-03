@@ -5,3 +5,7 @@
 ```docker
     docker-compose up -d
 ```
+Для остановки работы программы введите:
+```docker
+    docker-compose down --volumes
+```

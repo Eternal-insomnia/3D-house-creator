@@ -18,6 +18,9 @@ public class User {
     @Column(name = "user_name")
     private String userName;
 
+    @Column(name = "user_surname")
+    private String userSurname;
+
     @Column(name = "user_email")
     private String userEmail;
 
@@ -40,6 +43,14 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getUserSurname() {
+        return userSurname;
+    }
+
+    public void setUserSurname(String userSurname) {
+        this.userSurname = userSurname;
     }
 
     public String getUserEmail() {
