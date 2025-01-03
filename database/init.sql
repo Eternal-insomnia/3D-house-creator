@@ -10,4 +10,4 @@ CREATE TABLE IF NOT EXISTS "users"
 );
 
 INSERT INTO "users" (user_name, user_surname, user_email, user_password)
-VALUES ('test_name', 'test_surname', 'user', 'user');
+VALUES ('test_name', 'test_surname', 'user@test', 'user');

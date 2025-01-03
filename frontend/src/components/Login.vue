@@ -2,9 +2,8 @@
   <div class="login-component">
     <h1>Вход</h1>
     <form @submit.prevent="login" method="post">
-      <input v-model="email" type="userEmail" placeholder="Электронная почта" />
-      <span v-if="emailError" class="error">Invalid email format</span>
-      <input v-model="password" type="password" placeholder="Пароль" />
+      <input v-model="email" type="email" placeholder="Электронная почта" /><br>
+      <input v-model="password" type="password" placeholder="Пароль" /><br>
       <button type="submit">Войти</button>
     </form>
     <label>Нет аккаунта? </label>
@@ -22,10 +21,6 @@
       };
     },
     methods: {
-      validateEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-      },
       async login() {
         try {
           const response = await fetch('http://localhost:8080/api/login', {
