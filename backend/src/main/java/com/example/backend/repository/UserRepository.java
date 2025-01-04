@@ -1,12 +1,15 @@
 package com.example.backend.repository;
 
-import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.example.backend.entity.User;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+// Всё для работы с БД
+@Repository
+public interface UserRepository extends JpaRepository<User, UUID> {
     // Найти пользователя по email
-    Optional<User> findByUserEmail(String userEmail);
+    // Optional<User> findByUserEmail(String userEmail);
 }
