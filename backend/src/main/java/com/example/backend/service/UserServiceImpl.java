@@ -8,21 +8,27 @@ import com.example.backend.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.modelmapper.ModelMapper;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static java.util.Optional.ofNullable;
 
-@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
     
-    private final UserRepository userRepository;
-    
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ModelMapper mapper;
+
     // Получение всех пользователей
     @Override
     @Transactional(readOnly = true)
@@ -40,6 +46,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(userId)
                 .map(this::buildUserResponse)
                 .orElseThrow(() -> new EntityNotFoundException("User " + userId + " is not found"));
+    }
+
+    // Получение пользователя по Email
+    @Override
+    @Transactional(readOnly = true)
+    public UserResponse findUserByUserEmail(String userEmail) {
+        Optional<User> userByUserEmail = userRepository.findUserByUserEmail(userEmail);
+        UserResponse userResponse = mapper.map(userByUserEmail, UserResponse.class);
+        return userResponse;
     }
 
     // Добавление нового пользователя
@@ -94,37 +109,4 @@ public class UserServiceImpl implements UserService {
         ofNullable(request.getUserEmail()).map(user::setUserEmail);
         ofNullable(request.getUserPassword()).map(user::setUserPassword);
     }
-
-    // /**
-    //  * Найти пользователя по email
-    //  *
-    //  * @param userEmail - email пользователя
-    //  * @return найденный пользователь
-    //  * @throws RuntimeException, если пользователь не найден
-    //  */
-    // public User findUserByUserEmail(String userEmail) {
-    //     Optional<User> user = userRepository.findByUserEmail(userEmail);
-    //     return user.orElseThrow(() -> new RuntimeException("User with email " + userEmail + " not found"));
-    // }
-
-    // /**
-    //  * Аутентифицировать пользователя и вернуть его данные
-    //  *
-    //  * @param userEmail    - email пользователя
-    //  * @param userPassword - пароль пользователя
-    //  * @return объект пользователя
-    //  * @throws RuntimeException если аутентификация не удалась
-    //  */
-    // public User authenticateAndGetUser(String userEmail, String userPassword) {
-    //     Optional<User> userOptional = userRepository.findByUserEmail(userEmail);
-    //     if (userOptional.isPresent()) {
-    //         User user = userOptional.get();
-    //         if (user.getUserPassword().equals(userPassword)) {
-    //             return user;
-    //         } else {
-    //             throw new RuntimeException("Invalid password");
-    //         }
-    //     }
-    //     throw new RuntimeException("User not found");
-    // }
 }

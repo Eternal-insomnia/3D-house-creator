@@ -14,6 +14,9 @@ public interface UserService {
     // Получение пользователя по ID
     UserResponse findById(UUID userId);
 
+    // Получение пользователя по Email
+    UserResponse findUserByUserEmail(String userEmail);
+
     // Добавление нового пользователя
     UserResponse create(CreateUserRequest request);
 

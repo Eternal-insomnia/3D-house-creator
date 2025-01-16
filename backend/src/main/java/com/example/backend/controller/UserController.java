@@ -2,6 +2,8 @@ package com.example.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.backend.models.CreateUserRequest;
@@ -39,6 +41,13 @@ public class UserController {
         return userService.findById(id);
     }
 
+    // Получение пользователя по Email
+    @GetMapping(value = "/login/{userEmail}")
+    public ResponseEntity<UserResponse> getUserByUserEmail(@PathVariable("userEmail") String userEmail) {
+        UserResponse userResponse = userService.findUserByUserEmail(userEmail);
+        return ResponseEntity.status(HttpStatus.OK).body(userResponse);
+    }
+
     // Добавление нового пользователя
     @PostMapping(value = "/registration", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public UserResponse create(@RequestBody CreateUserRequest request) {
@@ -57,28 +66,5 @@ public class UserController {
     public void delete(@PathVariable UUID userId) {
         userService.delete(userId);
     }
-
-    // /**
-    //  * Эндпоинт для проверки пользователя по email и паролю
-    //  *
-    //  * @param loginRequest - объект с полями userEmail и userPassword
-    //  * @return подтверждение успешного входа или ошибка
-    //  */
-    // @PostMapping("/login")
-    // public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
-    //     try {
-    //         User user = userService.authenticateAndGetUser(
-    //             loginRequest.getUserEmail(), 
-    //             loginRequest.getUserPassword()
-    //         );
-
-    //         // Если пользователь найден, возвращаем его данные
-    //         return ResponseEntity.ok(user);
-    //     } catch (RuntimeException e) {
-    //         // Если ошибка, возвращаем сообщение
-    //         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-    //             .body(new ErrorResponse("Login failed: " + e.getMessage()));
-    //     }
-    // }
 }
 
