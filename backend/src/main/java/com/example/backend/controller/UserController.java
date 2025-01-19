@@ -41,6 +41,11 @@ public class UserController {
         return userService.fetchUserList();
     }
 
+    @GetMapping("/users/email")
+    public Optional<User> fetchUserByEmail(@RequestParam("userEmail") String userEmail) {
+        return userService.fetchUserByEmail(userEmail);
+    }
+
     @GetMapping("/users/{id}")
     public Optional<User> fetchUserById(@PathVariable("id") UUID userId) {
         return userService.fetchUserById(userId);

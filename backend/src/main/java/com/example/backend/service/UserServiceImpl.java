@@ -17,9 +17,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // @Autowired
-    // private ModelMapper mapper;
-
     @Override
     public User saveUser(User user) {
         // Saves and returns the user entity
@@ -38,30 +35,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(userId);
     }
 
-    // // Получение пользователя по ID
-    // @Override
-    // @Transactional(readOnly = true)
-    // public UserResponse findById(UUID userId) {
-    //     return userRepository.findById(userId)
-    //             .map(this::buildUserResponse)
-    //             .orElseThrow(() -> new EntityNotFoundException("User " + userId + " is not found"));
-    // }
-
-    // // Получение пользователя по Email
-    // @Override
-    // public UserResponse findUserByUserEmail(String userEmail) {
-    //     Optional<User> userByUserEmail = userRepository.findUserByUserEmail(userEmail);
-    //     UserResponse userResponse = mapper.map(userByUserEmail, UserResponse.class);
-    //     return userResponse;
-    // }
-
-    // // Добавление нового пользователя
-    // @Override
-    // @Transactional
-    // public UserResponse create(CreateUserRequest request) {
-    //     User user = buildUserRequest(request);
-    //     return buildUserResponse(userRepository.save(user));
-    // }
+    @Override
+    public Optional<User> fetchUserByEmail(String userEmail) {
+        // Retrieves and returns user entity by Email
+        return userRepository.findUserByUserEmail(userEmail);
+    }
 
     @Override
     public User updateUser(User user, UUID userId) {
@@ -92,32 +70,4 @@ public class UserServiceImpl implements UserService {
         // Deletes the user by its UUID
         userRepository.deleteById(userId);
     }
-
-    // // Конвертация объекта из User в UserResponse
-    // private UserResponse buildUserResponse(User user) {
-    //     return new UserResponse()
-    //             .setUserId(user.getUserId())
-    //             .setUserName(user.getUserName())
-    //             .setUserSurname(user.getUserSurname())
-    //             .setUserEmail(user.getUserEmail())
-    //             .setUserPassword(user.getUserPassword());
-    // }
-
-    // // Конвертация объекта из CreateUserRequest в User
-    // private User buildUserRequest(CreateUserRequest request) {
-    //     return new User()
-    //             .setUserId(request.getUserId())
-    //             .setUserName(request.getUserName())
-    //             .setUserSurname(request.getUserSurname())
-    //             .setUserEmail(request.getUserEmail())
-    //             .setUserPassword(request.getUserPassword());
-    // }
-
-    // // Изменение полей в найденном объекте
-    // private void userUpdate(User user, CreateUserRequest request) {
-    //     ofNullable(request.getUserName()).map(user::setUserName);
-    //     ofNullable(request.getUserSurname()).map(user::setUserSurname);
-    //     ofNullable(request.getUserEmail()).map(user::setUserEmail);
-    //     ofNullable(request.getUserPassword()).map(user::setUserPassword);
-    // }
 }

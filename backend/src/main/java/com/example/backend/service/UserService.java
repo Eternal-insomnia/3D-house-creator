@@ -13,7 +13,7 @@ import com.example.backend.entity.User;
 public interface UserService {
 
     /**
-     * Saves User entity.
+     * Saves User entity (create new user entity).
      * @param user the user to save
      * @return the saved user
      */
@@ -26,17 +26,18 @@ public interface UserService {
     List<User> fetchUserList();
 
     /**
-     * Fetches the user entity on its UUID
+     * Fetches the user entity by its UUID.
      * @param userId the UUID of user to fetch
      * @return the fetched user entity
      */
     Optional<User> fetchUserById(UUID userId);
 
-    // // Получение пользователя по Email
-    // UserResponse findUserByUserEmail(String userEmail);
-
-    // // Добавление нового пользователя
-    // UserResponse create(CreateUserRequest request);
+    /**
+     * Fetches the user entity by its email.
+     * @param userEmail the email of user to fetch
+     * @return the fetched user entity
+     */
+    Optional<User> fetchUserByEmail(String userEmail);
 
     /**
      * Updates an existing user entity.
