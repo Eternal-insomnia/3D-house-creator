@@ -1,7 +1,6 @@
 package com.example.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.backend.entity.User;
@@ -42,19 +41,24 @@ public class UserController {
         return userService.fetchUserList();
     }
 
-    @GetMapping("/users/email")
-    public ResponseEntity<String> fetchUserByEmail(@RequestParam("userEmail") String userEmail) {
-        User user = userService.fetchUserByEmail(userEmail).orElse(null);
-        if (user != null) {
-            return ResponseEntity.ok(user.toString());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
+    /**
+     * Handles GET requests to fetch user entity by its ID
+     * @param userId
+     * @return
+     */
     @GetMapping("/users/{id}")
     public Optional<User> fetchUserById(@PathVariable("id") UUID userId) {
         return userService.fetchUserById(userId);
+    }
+
+    /**
+     * Handles GET requests to fetch user entity by its email
+     * @param userEmail
+     * @return
+     */
+    @GetMapping("/users/email")
+    public Optional<User> fetchUserByEmail(@RequestParam("userEmail") String userEmail) {
+        return userService.fetchUserByEmail(userEmail);
     }
 
     /**

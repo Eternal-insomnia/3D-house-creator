@@ -1,6 +1,7 @@
 package com.example.backend.service;
 
 import com.example.backend.entity.User;
+import com.example.backend.exception.ThereIsNoSuchUserException;
 import com.example.backend.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> fetchUserByEmail(String userEmail) {
         // Retrieves and returns user entity by Email
-        return userRepository.findUserByUserEmail(userEmail);
+        Optional<User> user = userRepository.findUserByUserEmail(userEmail);
+        if (user.isEmpty()) {
+            throw new ThereIsNoSuchUserException();
+        }
+        return user;
     }
 
     @Override
