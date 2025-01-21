@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.backend.entity.User;
@@ -42,8 +43,13 @@ public class UserController {
     }
 
     @GetMapping("/users/email")
-    public Optional<User> fetchUserByEmail(@RequestParam("userEmail") String userEmail) {
-        return userService.fetchUserByEmail(userEmail);
+    public ResponseEntity<String> fetchUserByEmail(@RequestParam("userEmail") String userEmail) {
+        User user = userService.fetchUserByEmail(userEmail).orElse(null);
+        if (user != null) {
+            return ResponseEntity.ok(user.toString());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/users/{id}")
@@ -72,48 +78,5 @@ public class UserController {
         userService.deleteUserById(userId);
         return "Deleted Successfully";
     }
-
-    // @Autowired
-    // public UserController(UserService userService) {
-    //     this.userService = userService;
-    // }
-
-    // // Получение всех пользователей
-    // @GetMapping(value = "/users", produces = APPLICATION_JSON_VALUE)
-    // public List<UserResponse> findAll() {
-    //     return userService.findAll();
-    // }
-
-    // // Получение пользователя по ID
-    // @GetMapping(value = "/users/{userid}", produces = APPLICATION_JSON_VALUE)
-    // public UserResponse findById(@PathVariable UUID id) {
-    //     return userService.findById(id);
-    // }
-
-    // // Получение пользователя по Email
-    // @GetMapping(value = "/users/{userEmail}")
-    // public ResponseEntity<UserResponse> getUserByUserEmail(@PathVariable("userEmail") String userEmail) {
-    //     UserResponse userResponse = userService.findUserByUserEmail(userEmail);
-    //     return ResponseEntity.status(HttpStatus.OK).body(userResponse);
-    // }
-
-    // // Добавление нового пользователя
-    // @PostMapping(value = "/registration", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    // public UserResponse create(@RequestBody CreateUserRequest request) {
-    //     return userService.create(request);    
-    // } 
-
-    // // Изменение данных существующего пользователя
-    // @PatchMapping(value = "/{userId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    // public UserResponse update(@PathVariable UUID userId, @RequestBody CreateUserRequest request) {
-    //     return userService.update(userId, request);
-    // }
-
-    // // Удаление пользователя
-    // @ResponseStatus(HttpStatus.NO_CONTENT) // Возврат статуса вместо объекта
-    // @DeleteMapping(value = "/{userId}", produces = APPLICATION_JSON_VALUE)
-    // public void delete(@PathVariable UUID userId) {
-    //     userService.delete(userId);
-    // }
 }
 

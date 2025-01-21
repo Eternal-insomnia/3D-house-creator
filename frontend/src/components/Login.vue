@@ -23,11 +23,9 @@
     methods: {
       async login() {
         try {
-          const response = await fetch('http://localhost:8080/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userEmail: this.email, userPassword: this.password }),
-          });
+          const params = new URLSearchParams({ userEmail: this.email }).toString();
+          const response = await fetch(`http://localhost:8080/api/users/email?${params}`);
+          console.log(params, response)
           if (response.ok) {
             const user = await response.json();
             this.$store.commit('setUser', user);
