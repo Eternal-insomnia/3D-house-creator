@@ -2,7 +2,7 @@
 	<div class="registration-component">
 		<h1>Регистрация</h1>
     <form @submit.prevent="registration" method="post" class="registrartion-form">
-			<input v-model="name" type="userName" placeholder="Имя" required /><br>
+		  <input v-model="name" type="userName" placeholder="Имя" required /><br>
 			<input v-model="surname" type="userSurname" placeholder="Фамилия" required ><br>
       <input v-model="email" type="email" placeholder="Электронная почта" required /><br>
       <input v-model="password" type="password" placeholder="Пароль" required /><br>
@@ -27,7 +27,7 @@ export default {
 	methods: {
 		async registration() {
 			try {
-				const response = await fetch('http://localhost:8080/api/registration', {
+				const response = await fetch('http://localhost:8080/api/users', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ userName: this.name, userSurname: this.surname, userEmail: this.email, userPassword: this.password }),
@@ -35,7 +35,7 @@ export default {
 				if (response.ok) {
 					const user = await response.json();
 					this.$store.commit('setUser', user);
-					this.$router.push('/login');
+					this.toLogin();
 				} else {
 					const error = await response.json();
 					alert(error.message || 'Registration failed');
