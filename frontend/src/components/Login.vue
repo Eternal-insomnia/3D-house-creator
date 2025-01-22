@@ -2,8 +2,8 @@
   <div class="login-component">
     <h1>Вход</h1>
     <form @submit.prevent="login" method="post">
-      <input v-model="email" type="email" placeholder="Электронная почта" /><br>
-      <input v-model="password" type="password" placeholder="Пароль" /><br>
+      <input v-model="email" type="email" placeholder="Электронная почта" required/><br>
+      <input v-model="password" type="password" placeholder="Пароль" required/><br>
       <button type="submit">Войти</button>
     </form>
     <label>Нет аккаунта? </label>
