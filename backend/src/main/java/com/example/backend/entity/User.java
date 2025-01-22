@@ -43,8 +43,21 @@ public class User {
     private String userRole;
 
     // Подключение проектов пользователя
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(
+        mappedBy = "user",
+        cascade = CascadeType.ALL
+    )
     private List<Project> userProjects = new ArrayList<Project>();
+
+    public void addProject(Project project) {
+        userProjects.add(project);
+        project.setUser(this);
+    }
+    
+    public void removeProject(Project project) {
+        userProjects.remove(project);
+        project.setUser(null);
+    }
 
     // Сравнение объектов класса User
     @Override

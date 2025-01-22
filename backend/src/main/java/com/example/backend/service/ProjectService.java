@@ -2,6 +2,7 @@ package com.example.backend.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.example.backend.entity.Project;
 
@@ -16,7 +17,7 @@ public interface ProjectService {
      * @param project the project to save
      * @return the saved project
      */
-    Project saveProject(Project project);
+    Project saveProject(UUID userId);
 
     /**
      * Fetches the list of all Project entities.

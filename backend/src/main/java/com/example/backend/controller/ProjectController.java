@@ -2,20 +2,19 @@ package com.example.backend.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.entity.Project;
 import com.example.backend.service.ProjectService;
-
-import jakarta.validation.Valid;
 
 /**
  * REST controller for managing Project entities.
@@ -34,8 +33,8 @@ public class ProjectController {
      * @return the saved project entity
      */
     @PostMapping("/projects")
-    public Project saveProject(@Valid @RequestBody Project project) {
-        return projectService.saveProject(project);
+    public Project saveProject(@RequestParam(name = "userId") UUID userId) {
+        return projectService.saveProject(userId);
     }
 
     /**
