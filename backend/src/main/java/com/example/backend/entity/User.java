@@ -1,12 +1,16 @@
 package com.example.backend.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,21 +23,28 @@ import lombok.experimental.Accessors;
 @Table(name = "users")
 public class User {
     @Id
-    @Column(name = "user_id")
+    @Column(name = "userId")
     @GeneratedValue
     private UUID userId;
 
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "userName", nullable = false)
     private String userName;
 
-    @Column(name = "user_surname", nullable = false)
+    @Column(name = "userSurname", nullable = false)
     private String userSurname;
 
-    @Column(name = "user_email", nullable = false, unique = true)
+    @Column(name = "userEmail", nullable = false, unique = true)
     private String userEmail;
 
-    @Column(name = "user_password", nullable = false)
+    @Column(name = "userPassword", nullable = false)
     private String userPassword;
+
+    @Column(name = "userRole", nullable = false)
+    private String userRole;
+
+    // Подключение проектов пользователя
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Project> userProjects = new ArrayList<Project>();
 
     // Сравнение объектов класса User
     @Override
@@ -57,6 +68,7 @@ public class User {
                 "userSurname='" + userSurname + "'," +
                 "userEmail='" + userEmail + "'," +
                 "userPassword='" + userPassword + "'" +
+                "userRole='" + userRole + "'" +
                 "}";
     }
 }

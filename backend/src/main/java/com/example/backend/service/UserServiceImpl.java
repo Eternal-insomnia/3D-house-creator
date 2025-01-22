@@ -33,7 +33,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> fetchUserById(UUID userId) {
         // Retrieves and returns user entity by UUID
-        return userRepository.findById(userId);
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new ThereIsNoSuchUserException();
+        }
+        return user;
     }
 
     @Override

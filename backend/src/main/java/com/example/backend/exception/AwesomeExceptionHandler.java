@@ -17,6 +17,11 @@ public class AwesomeExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new AwesomeException("There is no such user"), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ThereIsNoSuchProjectException.class)
+    protected ResponseEntity <AwesomeException> handleThereIsNoSuchProjectException() {
+        return new ResponseEntity<>(new AwesomeException("There is no such project"), HttpStatus.NOT_FOUND);
+    }
+
     @Data
     @AllArgsConstructor
     private static class AwesomeException {
